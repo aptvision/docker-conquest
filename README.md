@@ -10,7 +10,7 @@ The ConQuest DICOM Server in a docker image.
 ### Option 1: Download from Docker Hub
 All updates to this repository are automatically built on the associated Docker Hub page: [docker-conquest]
 
-[docker-conquest]: <https://hub.docker.com/r/docker-conquest/docker-conquest/>
+[docker-conquest]: <https://hub.docker.com/r/aptvision/docker-conquest/>
 
 To pull this directly from Docker Hub, simply run:
 ```sh
@@ -24,7 +24,7 @@ If you want to build from the Dockerfile, clone the [docker-conquest github repo
 $ sudo docker build -t docker-conquest .
 ```
 
-[docker-conquest github repository]: <https://github.com/wavedrift/docker-conquest>
+[docker-conquest github repository]: <https://github.com/aptvision/docker-conquest>
 
 ## Running
 To run the Docker image, simply run:
