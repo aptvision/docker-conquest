@@ -10,7 +10,7 @@ The ConQuest DICOM Server in a docker image.
 ### Option 1: Download from Docker Hub
 All updates to this repository are automatically built on the associated Docker Hub page: [docker-conquest]
 
-[docker-conquest]: <https://hub.docker.com/r/wavedrift/docker-conquest/>
+[docker-conquest]: <https://hub.docker.com/r/docker-conquest/docker-conquest/>
 
 To pull this directly from Docker Hub, simply run:
 ```sh
