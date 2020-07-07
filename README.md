@@ -4,27 +4,8 @@ Docker container implementing version 1.5.0 of the [ConQuest DICOM server].
 [ConQuest DICOM server]: <https://ingenium.home.xs4all.nl/dicom.html>
 
 ## About
-The ConQuest DICOM Server in a docker image.
-
-## Installation
-### Option 1: Download from Docker Hub
-All updates to this repository are automatically built on the associated Docker Hub page: [conquest-server]
-
-[conquest-server]: <https://hub.docker.com/r/aptvision/conquest-server/>
-
-To pull this directly from Docker Hub, simply run:
-```sh
-$ sudo docker pull aptvision/conquest-server
-```
-
-
-### Option 2: Build locally using Docker
-If you want to build from the Dockerfile, clone the [docker-conquest github repository] to your local machine, open a terminal in that folder and type:
-```sh
-$ sudo docker build -t conquest-server .
-```
-
-[docker-conquest github repository]: <https://github.com/aptvision/conquest-server>
+The ConQuest DICOM Server in a docker image. This image supports the built-in sqlite database and 
+using an external postgres database. MariaDB is also possible but not yet tested with this image.
 
 ## Running
 To run the Docker image with the built-in sqlite db, simply run:
@@ -37,10 +18,10 @@ The ConQuest web interface is then accessible by opening a web browser and navig
 
 ### Docker compose
 
-Alternatively, see [docker-compose.yml] for an example docker-compose file (using postgres). This will get you
-up and running quickly:
+Alternatively, use docker-compose. See the [compose-examples](compose-examples) directory for examples. To run
+conquest using postgres for example:
 
-    docker-compose -f compose-examples/docker-compose-postgres.yml 
+    docker-compose --file compose-examples/docker-compose-postgres.yml --project-name conquest up 
 
 ### Ports
 The following ports on the container are exposed for you to bind to: 
