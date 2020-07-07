@@ -57,18 +57,16 @@ EXPOSE 5678 80
 # Regenerate the database
 RUN /opt/conquest/dgate -v -r
 
-#Generate the autostart script which will be used to initialise the server
-RUN echo "#!/bin/bash" > /startConquest.sh; \
-	echo "service apache2 restart" >> /startConquest.sh; \
-	echo "/opt/conquest/dgate -v" >> /startConquest.sh; \
-	chmod +x /startConquest.sh
+ADD dicom.ini /opt/conquest/dicom.ini
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 ADD index.html /var/www/html/index.html
 
 
 # Start apache and ConQuest
 # The server should then be running and localhost/cgi-bin/dgate should provide a working web interface.
-CMD ["/startConquest.sh"]
+CMD ["/entrypoint.sh"]
 
 
 

@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  conquest:
+    build: .
+    ports:
+    - 80:80
+    environment:
+      DB_TYPE: "postgres"
+      POSTGRES_SERVER: "postgres"
+      POSTGRES_USERNAME: "conquest"
+      POSTGRES_PASSWORD: mysecretpassword
+
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: "conquest"
+      POSTGRES_PASSWORD: mysecretpassword
