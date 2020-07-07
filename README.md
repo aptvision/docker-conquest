@@ -26,6 +26,27 @@ $ sudo docker build -t conquest-server .
 
 [docker-conquest github repository]: <https://github.com/aptvision/conquest-server>
 
+## Running
+To run the Docker image with the built-in sqlite db, simply run:
+```sh
+$ sudo docker run -p 5678:5678 -p 80:80 -v /opt/conquest/data/ aptvision/conquest-server
+```
+Note that this will bind ports 5678 and 80 in the Docker container to the same ports on the host.  Change these if you want them bound elsewhere.
+
+The ConQuest web interface is then accessible by opening a web browser and navigating to `http://localhost`.
+
+### Docker compose
+
+Alternatively, see [docker-compose.yml] for an example docker-compose file (using postgres). This will get you
+up and running quickly:
+
+    docker-compose -f compose-examples/docker-compose-postgres.yml 
+
+### Ports
+The following ports on the container are exposed for you to bind to: 
+  - Port 5678 - used for DICOM send/query/receive.
+  - Port 80 - used for http.
+
 ## Databases
 
 Conquest can use a variety of databases. Use the `DB_TYPE` env var to change this. Note that if you
@@ -34,31 +55,18 @@ override this then you might also need to set some more variables to configure t
 ### PostgreSQL env vars
     
     DB_TYPE: "postgres"
-    POSTGRES_SERVER: "postgres"
+    POSTGRES_HOST: "postgres"
+    POSTGRES_SERVER: "conquest"
     POSTGRES_USERNAME: "conquest"
     POSTGRES_PASSWORD: mysecretpassword
 
 #### Preconfigured database
 
     no env vars required, this is default
+    
+#### MariaDB
 
-## Running
-To run the Docker image, simply run:
-```sh
-$ sudo docker run -p 5678:5678 -p 80:80 conquest-server
-```
-Note that this will bind ports 5678 and 80 in the Docker container to the same ports on the host.  Change these if you want them bound elsewhere.
-
-The ConQuest web interface is then accessible by opening a web browser and navigating to `http://localhost`.
-
-### Docker compose
-
-Alternatively, see [docker-compose.yml] for an example docker-compose file (using postgres).
-
-### Ports
-The following ports on the container are exposed for you to bind to: 
-  - Port 5678 - used for DICOM send/query/receive.
-  - Port 80 - used for http.
+MariaDB is not tested, please submit a PR and it will be gladly accepted.
 
 # Licence
 MIT Licence for Dockerfile.
