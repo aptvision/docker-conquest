@@ -13,8 +13,13 @@ RUN apt-get -y update \
             lua5.1 \
             lua5.1-dev \
             lua-socket \
+            make \
             build-essential \
             gettext \
+            # Needed for postgres
+            libpq-dev \
+            # Needed for mariadb
+            libmariadbclient-dev \
             sudo
 
 
@@ -43,7 +48,8 @@ RUN mkdir /usr/local/man/man1
 #	sudo make install;
 
 # Compile and install the web access
-RUN	chmod 0700 /opt/conquest/maklinux; echo "5" | /opt/conquest/maklinux # precompiled
+RUN	chmod 0700 /opt/conquest/maklinux
+#RUN	chmod 0700 /opt/conquest/maklinux; echo "5" | /opt/conquest/maklinux # precompiled
 
 # Enable CGI scripts on the Apache Server
 RUN a2enmod cgi
@@ -53,9 +59,6 @@ RUN a2enmod cgi
 
 # Expose port 80 (http) and 5678 (for DICOM query/retrieve/send)
 EXPOSE 5678 80
-
-# Regenerate the database
-RUN /opt/conquest/dgate -v -r
 
 ADD dicom.ini /opt/conquest/dicom.ini
 ADD entrypoint.sh /entrypoint.sh

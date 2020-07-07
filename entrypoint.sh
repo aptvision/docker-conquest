@@ -3,6 +3,10 @@
 case $DB_TYPE in
 "postgres")
 
+    if [ -z "$POSTGRES_HOST" ]; then
+      >&2 echo "DB_TYPE is postgres but POSTGRES_HOST env var not set"
+      exit 1
+    fi
     if [ -z "$POSTGRES_SERVER" ]; then
       >&2 echo "DB_TYPE is postgres but POSTGRES_SERVER env var not set"
       exit 1
@@ -16,19 +20,40 @@ case $DB_TYPE in
       exit 1
     fi
 
-    sed -i "s@sql_server_placeholder@$POSTGRES_SERVER@" dicom.ini
-    sed -i "s@sql_username_placeholder@$POSTGRES_USERNAME@" dicom.ini
-    sed -i "s@sql_password_placeholder@$POSTGRES_PASSWORD@" dicom.ini
-    sed -i "s@PostGres*\$@PostGres = 1@" dicom.ini
+    echo "2" | /opt/conquest/maklinux
+
+    sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" dicom.ini
+    sed -i "s@SQLServer.*@SQLServer = $POSTGRES_SERVER@" dicom.ini
+    sed -i "s@Username.*@Username = $POSTGRES_USERNAME@" dicom.ini
+    sed -i "s@Password.*@Password = $POSTGRES_PASSWORD@" dicom.ini
+    sed -i "s@PostGres.*@PostGres = 1@" dicom.ini
+    sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" dicom.ini
+    sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" dicom.ini
+
   ;;
 "sqlite")
     sed -i "s@sql_server_placeholder@/opt/conquest/data/dbase/conquest.db3@" dicom.ini
     sed -i "s@SQLite*\$@SQLite = 1@" dicom.ini
   ;;
 *)
-  Message=""
+  echo "5" | /opt/conquest/maklinux
   ;;
 esac
 
-service apache2 start
+cat /opt/conquest/dicom.ini
+
+# Regenerate the database
+/opt/conquest/dgate -v -r
+
+service apache2 restart
+
+
+
+# Log apache and conquest logs to the docker logs too
+touch /var/log/apache2/error.log
+touch /opt/conquest/PacsTrouble.log
+
+tail -f /var/log/apache2/error.log &
+tail -f /opt/conquest/PacsTrouble.log &
+
 /opt/conquest/dgate -v
