@@ -41,9 +41,9 @@ override this then you might also need to set some more variables to configure t
     POSTGRES_USERNAME: "conquest"
     POSTGRES_PASSWORD: mysecretpassword
 
-#### Preconfigured database
+#### Built-in SQLite database
 
-    no env vars required, this is default
+Mo env vars required to use the built-in SQLite database, this is used when no `DB_TYPE` is specified.
     
 #### MariaDB
 
