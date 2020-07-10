@@ -20,7 +20,9 @@ RUN apt-get -y update \
             libpq-dev \
             # Needed for mariadb
             libmariadbclient-dev \
-            sudo
+            sudo \
+    && apt-get autoremove \
+    && apt-get clean
 
 
 RUN mkdir /tmp/conquest; cd /tmp/conquest; \
