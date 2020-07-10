@@ -1,5 +1,5 @@
 # docker-conquest
-Docker container implementing version 1.5.0 of the [ConQuest DICOM server]. 
+Docker container containing the [ConQuest DICOM server]. 
 
 [ConQuest DICOM server]: <https://ingenium.home.xs4all.nl/dicom.html>
 
