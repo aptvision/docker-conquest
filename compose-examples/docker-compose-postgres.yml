@@ -11,6 +11,7 @@ services:
       POSTGRES_SERVER: "conquest"
       POSTGRES_USERNAME: "conquest"
       POSTGRES_PASSWORD: mysecretpassword
+      AE_TITLE: CONQUESTSRV1
     depends_on:
       - postgres
     volumes:
