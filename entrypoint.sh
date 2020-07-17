@@ -20,6 +20,8 @@ case $DB_TYPE in
       exit 1
     fi
 
+    AE_TITLE="${AE_TITLE:-CONQUESTSRV1}"
+
     echo "2" | /opt/conquest/maklinux
 
     sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" dicom.ini
@@ -29,6 +31,8 @@ case $DB_TYPE in
     sed -i "s@PostGres.*@PostGres = 1@" dicom.ini
     sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" dicom.ini
     sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" dicom.ini
+    sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" dicom.ini
+    sed -i "s@PACSName.*@PACSName = $AE_TITLE@" dicom.ini
 
   ;;
 "sqlite")
