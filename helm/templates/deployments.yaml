@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.name }}"
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    app: "{{ .Values.name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    version: "{{ .Values.image.tag }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Values.name }}"
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.name }}"
+    spec:
+      imagePullSecrets:
+        - name: "{{ .Values.imagePullSecretsName }}"
+      containers:
+        - name: "{{ .Values.name }}"
+          image: "{{ .Values.registry }}:{{ .Values.image.tag }}"
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          ports:
+            - containerPort: 80
+          env:
+{{ toYaml .Values.env | indent 12 }}
+

@@ -1,0 +1,28 @@
+replicaCount: 3
+image:
+  tag: latest
+name: conquest
+namespace: default
+ingress:
+  enabled: false
+  hosts:
+    - acme.com
+  certSecretName: default-cert-secret
+service:
+  # Change to NodePort if ingress.enable=false
+  type: ClusterIP
+rbac:
+  enabled: false
+resources:
+  limits:
+    cpu: 100m
+    memory: 32Mi
+  requests:
+    cpu: 10m
+    memory: 16Mi
+registry: "registry.example.com/docker-conquest"
+imagePullSecretsName: registrycredentials
+env:
+  - name: "DB_TYPE"
+    value: "sqlite" # Can be postgres or sqlite or an empty string (see README)
+
