@@ -1,0 +1,13 @@
+# See https://helm.sh/docs/topics/charts/ for a full list of possible options
+
+name: conquest
+# We don't need to track chart versions since we already publish versions
+# of this GIT repository, so we can go back to any chart version this way.
+version: 0.0.1
+apiVersion: v1
+description: The ConQuest DICOM Server
+keywords:
+  - conquest
+  - dicom
+  - mwl
+dependencies: []

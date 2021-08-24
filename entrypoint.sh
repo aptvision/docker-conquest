@@ -57,7 +57,7 @@ service apache2 restart
 touch /var/log/apache2/error.log
 touch /opt/conquest/PacsTrouble.log
 
-tail -f /var/log/apache2/error.log &
-tail -f /opt/conquest/PacsTrouble.log &
+ln -sf /proc/1/fd/1 /var/log/apache2/error.log
+ln -sf /proc/1/fd/1 /opt/conquest/PacsTrouble.log
 
 /opt/conquest/dgate -v
