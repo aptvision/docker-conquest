@@ -47,6 +47,7 @@ case $DB_TYPE in
 esac
 
 chmod 0700 /opt/conquest/linux/dgate
+chown www-data:www-data /opt/conquest/webserver
 
 cat $DICOM_INI
 
