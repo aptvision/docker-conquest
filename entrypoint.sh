@@ -46,6 +46,8 @@ case $DB_TYPE in
   ;;
 esac
 
+chmod 0700 /opt/conquest/linux/dgate
+
 cat $DICOM_INI
 
 # Regenerate the database
