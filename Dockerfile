@@ -30,8 +30,6 @@ RUN mkdir /tmp/conquest; cd /tmp/conquest; \
 	unzip dicomserver150a.zip; \
 	mv /tmp/conquest /opt/conquest
 
-WORKDIR /opt/conquest
-
 # Create missing directory prior to make (otherwise we'll get errors)
 RUN mkdir /usr/local/man/man1
 
@@ -53,6 +51,8 @@ RUN mkdir /usr/local/man/man1
 RUN	chmod 0700 /opt/conquest/maklinux
 #RUN	chmod 0700 /opt/conquest/maklinux; echo "5" | /opt/conquest/maklinux # precompiled
 
+WORKDIR /opt/conquest/linux
+
 # Enable CGI scripts on the Apache Server
 RUN a2enmod cgi
 
@@ -62,7 +62,7 @@ RUN a2enmod cgi
 # Expose port 80 (http) and 5678 (for DICOM query/retrieve/send)
 EXPOSE 5678 80
 
-ADD dicom.ini /opt/conquest/dicom.ini
+ADD dicom.ini /opt/conquest/linux/dicom.ini
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

@@ -20,8 +20,7 @@ resources:
   requests:
     cpu: 10m
     memory: 16Mi
-registry: "registry.example.com/docker-conquest"
-imagePullSecretsName: registrycredentials
+registry: "ghcr.io/aptvision/conquest"
 env:
   - name: "DB_TYPE"
     value: "sqlite" # Can be postgres or sqlite or an empty string (see README)
