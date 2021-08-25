@@ -53,9 +53,6 @@ RUN	chmod 0700 /opt/conquest/maklinux
 
 WORKDIR /opt/conquest/linux
 
-# Set the apache vhost config
-ADD env/apache-vhost.conf /etc/apache/sites-available/000-default.conf
-
 # Enable CGI scripts on the Apache Server
 RUN a2enmod cgi
 
@@ -69,16 +66,10 @@ ADD dicom.ini /opt/conquest/linux/dicom.ini
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Set the apache vhost and index page
+ADD env/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 ADD index.html /opt/conquest/webserver/index.html
-
 
 # Start apache and ConQuest
 # The server should then be running and localhost/cgi-bin/dgate should provide a working web interface.
 CMD ["/entrypoint.sh"]
-
-
-
-
-#FROM ubuntu:20.04
-#
-#COPY --from=0 /go/src/github.com/alexellis/href-counter/app .
