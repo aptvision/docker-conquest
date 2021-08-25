@@ -46,6 +46,9 @@ case $DB_TYPE in
   ;;
 esac
 
+# Change the allowed webroot in the main apache config
+sed -i "s@/var/www@/opt/conquest/webserver@" /etc/apache2/apache2.conf
+
 # Fix permissions
 chmod 0700 /opt/conquest/linux/dgate
 chown -R www-data:www-data /opt/conquest/webserver
