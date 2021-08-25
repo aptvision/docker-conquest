@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DICOM_INI=/opt/conquest/linux/dicom.ini
+
 case $DB_TYPE in
 "postgres")
 
@@ -24,40 +26,38 @@ case $DB_TYPE in
 
     echo "2" | /opt/conquest/maklinux
 
-    sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" dicom.ini
-    sed -i "s@SQLServer.*@SQLServer = $POSTGRES_SERVER@" dicom.ini
-    sed -i "s@Username.*@Username = $POSTGRES_USERNAME@" dicom.ini
-    sed -i "s@Password.*@Password = $POSTGRES_PASSWORD@" dicom.ini
-    sed -i "s@PostGres.*@PostGres = 1@" dicom.ini
-    sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" dicom.ini
-    sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" dicom.ini
-    sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" dicom.ini
-    sed -i "s@PACSName.*@PACSName = $AE_TITLE@" dicom.ini
+    sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" $DICOM_INI
+    sed -i "s@SQLServer.*@SQLServer = $POSTGRES_SERVER@" $DICOM_INI
+    sed -i "s@Username.*@Username = $POSTGRES_USERNAME@" $DICOM_INI
+    sed -i "s@Password.*@Password = $POSTGRES_PASSWORD@" $DICOM_INI
+    sed -i "s@PostGres.*@PostGres = 1@" $DICOM_INI
+    sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" $DICOM_INI
+    sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" $DICOM_INI
+    sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI
+    sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI
 
   ;;
 "sqlite")
-    sed -i "s@sql_server_placeholder@/opt/conquest/data/dbase/conquest.db3@" dicom.ini
-    sed -i "s@SQLite*\$@SQLite = 1@" dicom.ini
+    sed -i "s@sql_server_placeholder@/opt/conquest/data/dbase/conquest.db3@" $DICOM_INI
+    sed -i "s@SQLite*\$@SQLite = 1@" $DICOM_INI
   ;;
 *)
   echo "5" | /opt/conquest/maklinux
   ;;
 esac
 
-cat /opt/conquest/dicom.ini
+cat $DICOM_INI
 
 # Regenerate the database
-/opt/conquest/dgate -v -r
+/opt/conquest/linux/dgate -v -r
 
 service apache2 restart
-
-
 
 # Log apache and conquest logs to the docker logs too
 touch /var/log/apache2/error.log
 touch /opt/conquest/PacsTrouble.log
 
 ln -sf /proc/1/fd/1 /var/log/apache2/error.log
-ln -sf /proc/1/fd/1 /opt/conquest/PacsTrouble.log
+ln -sf /proc/1/fd/1 /opt/conquest/linux/PacsTrouble.log
 
-/opt/conquest/dgate -v
+/opt/conquest/linux/dgate -v
