@@ -1,6 +1,12 @@
 #!/bin/bash
 
-DICOM_INI=/opt/conquest/linux/dicom.ini
+set -e
+
+CONQUEST_HOME=/opt/conquest
+DICOM_INI=$CONQUEST_HOME/linux/dicom.ini
+CGI_DIR=/usr/lib/cgi-bin
+
+cd $CONQUEST_HOME
 
 case $DB_TYPE in
 "postgres")
@@ -24,7 +30,7 @@ case $DB_TYPE in
 
     AE_TITLE="${AE_TITLE:-CONQUESTSRV1}"
 
-    echo "2" | /opt/conquest/maklinux
+    echo "2" | ./maklinux
 
     sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" $DICOM_INI
     sed -i "s@SQLServer.*@SQLServer = $POSTGRES_SERVER@" $DICOM_INI
@@ -38,38 +44,38 @@ case $DB_TYPE in
 
   ;;
 "sqlite")
-    sed -i "s@sql_server_placeholder@/opt/conquest/data/dbase/conquest.db3@" $DICOM_INI
+    sed -i "s@sql_server_placeholder@$CONQUEST_HOME/data/dbase/conquest.db3@" $DICOM_INI
     sed -i "s@SQLite*\$@SQLite = 1@" $DICOM_INI
   ;;
 *)
-  echo "5" | /opt/conquest/maklinux
+  echo "5" | ./maklinux
   ;;
 esac
 
 # Change the allowed webroot in the main apache config
-sed -i "s@/var/www@/opt/conquest/webserver@" /etc/apache2/apache2.conf
+sed -i "s@/var/www@$CONQUEST_HOME/webserver@" /etc/apache2/apache2.conf
 
 # Copy dgate binary to cgi-bin
-cp /opt/conquest/linux/dgate /usr/lib/cgi-bin/dgate
+cp $CONQUEST_HOME/linux/dgate $CGI_DIR/dgate
 
 # Fix permissions
-chmod 0700 /usr/lib/cgi-bin/dgate
-chmod 0700 /opt/conquest/linux/dgate
-chown -R www-data:www-data /usr/lib/cgi-bin/dgate
-chown -R www-data:www-data /opt/conquest/webserver
+chmod 0700 $CGI_DIR/dgate
+chmod 0700 $CONQUEST_HOME/linux/dgate
+chown -R www-data:www-data $CGI_DIR/dgate
+chown -R www-data:www-data $CONQUEST_HOME/webserver
 
 cat $DICOM_INI
 
 # Regenerate the database
-/opt/conquest/linux/dgate -v -r
+./linux/dgate -v -r
 
 service apache2 restart
 
 # Log apache and conquest logs to the docker logs too
 touch /var/log/apache2/error.log
-touch /opt/conquest/PacsTrouble.log
+touch $CONQUEST_HOME/PacsTrouble.log
 
 #ln -sf /proc/1/fd/1 /var/log/apache2/error.log
-#ln -sf /proc/1/fd/1 /opt/conquest/linux/PacsTrouble.log
+#ln -sf /proc/1/fd/1 $CONQUEST_HOME/linux/PacsTrouble.log
 
-/opt/conquest/linux/dgate -v
+./linux/dgate -v
