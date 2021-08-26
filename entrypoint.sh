@@ -52,6 +52,9 @@ case $DB_TYPE in
   ;;
 esac
 
+# Copy the dicom.sql file
+cp $CONQUEST_HOME/linux/conf/dicom.sql.$DB_TYPE $CONQUEST_HOME/linux/dicom.sql
+
 # Change the allowed webroot in the main apache config
 sed -i "s@/var/www@$CONQUEST_HOME/webserver@" /etc/apache2/apache2.conf
 
