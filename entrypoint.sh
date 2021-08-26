@@ -50,12 +50,12 @@ esac
 sed -i "s@/var/www@/opt/conquest/webserver@" /etc/apache2/apache2.conf
 
 # Copy dgate binary to cgi-bin
-cp /opt/conquest/linux/dgate /var/lib/cgi-bin/dgate
+cp /opt/conquest/linux/dgate /usr/lib/cgi-bin/dgate
 
 # Fix permissions
-chmod 0700 /var/lib/cgi-bin/dgate
+chmod 0700 /usr/lib/cgi-bin/dgate
 chmod 0700 /opt/conquest/linux/dgate
-chown -R www-data:www-data /var/lib/cgi-bin/dgate
+chown -R www-data:www-data /usr/lib/cgi-bin/dgate
 chown -R www-data:www-data /opt/conquest/webserver
 
 cat $DICOM_INI
