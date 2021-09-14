@@ -70,7 +70,8 @@ chown -R www-data:www-data $CONQUEST_HOME/webserver
 cat $DICOM_INI
 
 # Regenerate the database
-./linux/dgate -v -r
+cd $CONQUEST_HOME/linux
+./dgate -v -r
 
 service apache2 restart
 
@@ -81,4 +82,4 @@ touch $CONQUEST_HOME/PacsTrouble.log
 #ln -sf /proc/1/fd/1 /var/log/apache2/error.log
 #ln -sf /proc/1/fd/1 $CONQUEST_HOME/linux/PacsTrouble.log
 
-./linux/dgate -v
+./dgate -v

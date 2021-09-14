@@ -25,7 +25,10 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           ports:
+            {{- if .Values.ingress.ui.enabled -}}
             - containerPort: 80
+            {{- end }}
+            - containerPort: 5678
           env:
 {{ toYaml .Values.env | indent 12 }}
 
