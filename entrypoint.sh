@@ -29,6 +29,7 @@ case $DB_TYPE in
     fi
 
     AE_TITLE="${AE_TITLE:-CONQUESTSRV1}"
+    PORT="${PORT:-5678}"
 
     echo "2" | ./maklinux
 
@@ -41,6 +42,7 @@ case $DB_TYPE in
     sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" $DICOM_INI
     sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI
     sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI
+    sed -i "s@TCPPort.*@TCPPort = $PORT@" $DICOM_INI
 
   ;;
 "sqlite")
