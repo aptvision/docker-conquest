@@ -65,14 +65,14 @@ cp $CONQUEST_HOME/linux/dgate $CGI_DIR/dgate
 
 # Fix permissions
 chmod 0700 $CGI_DIR/dgate
-chmod 0700 $CONQUEST_HOME/linux/dgate
+chmod 0700 $CONQUEST_HOME/dgate
 chown -R www-data:www-data $CGI_DIR/dgate
 chown -R www-data:www-data $CONQUEST_HOME/webserver
 
 cat $DICOM_INI
 
 # Regenerate the database
-cd $CONQUEST_HOME/linux
+cd $CONQUEST_HOME
 ./dgate -v -r
 
 service apache2 restart
