@@ -34,4 +34,8 @@ registry: "ghcr.io/aptvision/conquest"
 env:
   - name: "DB_TYPE"
     value: "sqlite" # Can be postgres or sqlite or an empty string (see README)
+  - name: "AE_TITLE"
+    value: "CONQUESTSRV1"
+  - name: "PORT"
+    value: "5678"
 
