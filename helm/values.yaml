@@ -1,13 +1,23 @@
-replicaCount: 3
+replicaCount: 1
 image:
   tag: latest
 name: conquest
 namespace: default
+
 ingress:
+  # Whether or not to set up ingress for the MWL connection
   enabled: false
+
+  ui:
+    # If enabled the UI is available at /ui and has an interface to query the server and view images
+    # Does nothing if ingress.enabled=false
+    enabled: false
+
   hosts:
     - acme.com
+
   certSecretName: default-cert-secret
+
 service:
   # Change to NodePort if ingress.enable=false
   type: ClusterIP
