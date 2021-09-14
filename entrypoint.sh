@@ -3,7 +3,7 @@
 set -e
 
 CONQUEST_HOME=/opt/conquest
-DICOM_INI=$CONQUEST_HOME/linux/dicom.ini
+DICOM_INI=$CONQUEST_HOME/dicom.ini
 CGI_DIR=/usr/lib/cgi-bin
 
 cd $CONQUEST_HOME
