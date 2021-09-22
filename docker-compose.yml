@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  conquest:
+    build: .
+    ports:
+#    - 80:80
+    - 5678:5678
+    environment:
+      DB_TYPE: "dbase"
+      AE_TITLE: CONQUESTSRV1

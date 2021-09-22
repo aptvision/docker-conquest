@@ -8,6 +8,17 @@ CGI_DIR=/usr/lib/cgi-bin
 
 cd $CONQUEST_HOME
 
+# Set defaults
+AE_TITLE="${AE_TITLE:-CONQUESTSRV1}"
+PORT="${PORT:-5678}"
+DEBUG_LEVEL="${DEBUG_LEVEL:-0}"
+
+# Replace vars that are independant of db choice
+sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI
+sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI
+sed -i "s@TCPPort.*@TCPPort = $PORT@" $DICOM_INI
+sed -i "s@DebugLevel.*@DebugLevel = $DEBUG_LEVEL@" $DICOM_INI
+
 case $DB_TYPE in
 "postgres")
 
@@ -28,9 +39,6 @@ case $DB_TYPE in
       exit 1
     fi
 
-    AE_TITLE="${AE_TITLE:-CONQUESTSRV1}"
-    PORT="${PORT:-5678}"
-
     echo "2" | ./maklinux
 
     sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" $DICOM_INI
@@ -40,28 +48,28 @@ case $DB_TYPE in
     sed -i "s@PostGres.*@PostGres = 1@" $DICOM_INI
     sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" $DICOM_INI
     sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" $DICOM_INI
-    sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI
-    sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI
-    sed -i "s@TCPPort.*@TCPPort = $PORT@" $DICOM_INI
 
   ;;
 "sqlite")
     sed -i "s@sql_server_placeholder@$CONQUEST_HOME/data/dbase/conquest.db3@" $DICOM_INI
-    sed -i "s@SQLite*\$@SQLite = 1@" $DICOM_INI
+    sed -i "s@SQLite.*\$@SQLite = 1@" $DICOM_INI
   ;;
-*)
+"dbase" | *)
   echo "5" | ./maklinux
   ;;
 esac
 
+find $CONQUEST_HOME -type f -name "*dicom.sql*"
+
 # Copy the dicom.sql file
-cp $CONQUEST_HOME/linux/conf/dicom.sql.$DB_TYPE $CONQUEST_HOME/linux/dicom.sql
+cp $CONQUEST_HOME/linux/conf/dicom.sql.$DB_TYPE $CONQUEST_HOME/dicom.sql
 
 # Change the allowed webroot in the main apache config
 sed -i "s@/var/www@$CONQUEST_HOME/webserver@" /etc/apache2/apache2.conf
 
 # Copy dgate binary to cgi-bin
 cp $CONQUEST_HOME/linux/dgate $CGI_DIR/dgate
+cp $CONQUEST_HOME/linux/dgate $CONQUEST_HOME/dgate
 
 # Fix permissions
 chmod 0700 $CGI_DIR/dgate
