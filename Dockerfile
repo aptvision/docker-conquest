@@ -62,7 +62,9 @@ RUN a2enmod cgi
 # Expose port 80 (http) and 5678 (for DICOM query/retrieve/send)
 EXPOSE 5678 80
 
-ADD dicom.ini /opt/conquest/linux/dicom.ini
+ENV DB_TYPE "dbase"
+
+ADD dicom.ini /opt/conquest/dicom.ini
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

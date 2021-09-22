@@ -38,4 +38,6 @@ env:
     value: "CONQUESTSRV1"
   - name: "PORT"
     value: "5678"
+  - name: "DEBUG_LEVEL"
+    value: "0"   # Can be 0, 1, 2, 3, 4.  Be careful with higher values as a LOT will be logged
 
