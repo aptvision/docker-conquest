@@ -48,6 +48,7 @@ case $DB_TYPE in
     sed -i "s@PostGres.*@PostGres = 1@" $DICOM_INI
     sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" $DICOM_INI
     sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" $DICOM_INI
+    sed -i "s@BrowseThroughDBF.*@BrowseThroughDBF = 1@" $DICOM_INI
 
   ;;
 "sqlite")

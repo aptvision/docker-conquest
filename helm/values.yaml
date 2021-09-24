@@ -4,13 +4,12 @@ image:
 name: conquest
 namespace: default
 
+
 ingress:
-  # Whether or not to set up ingress for the MWL connection
-  enabled: false
 
   ui:
     # If enabled the UI is available at /ui and has an interface to query the server and view images
-    # Does nothing if ingress.enabled=false
+    # If disabled then no ingress is created at all
     enabled: false
 
   hosts:
@@ -18,9 +17,23 @@ ingress:
 
   certSecretName: default-cert-secret
 
-service:
-  # Change to NodePort if ingress.enable=false
-  type: ClusterIP
+
+network:
+  dicomService:
+    type: "ClusterIP"   # Can be "ClusterIP" or "NodePort". ClusterIP requires no further configuration
+    # while NodePort requires setting the desired ports to expose on the node
+
+    # The node port to bind to on each node, only used if type is NodePort
+    nodePort: 30146
+
+
+probes:
+  readiness:
+    enabled: false
+  startup:
+    enabled: true
+
+
 rbac:
   enabled: false
 resources:
@@ -31,6 +44,8 @@ resources:
     cpu: 10m
     memory: 16Mi
 registry: "ghcr.io/aptvision/conquest"
+
+
 env:
   - name: "DB_TYPE"
     value: "sqlite" # Can be postgres or sqlite or an empty string (see README)
@@ -40,4 +55,3 @@ env:
     value: "5678"
   - name: "DEBUG_LEVEL"
     value: "0"   # Can be 0, 1, 2, 3, 4.  Be careful with higher values as a LOT will be logged
-
