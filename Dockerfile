@@ -64,7 +64,7 @@ EXPOSE 5678 80
 
 ENV DB_TYPE "dbase"
 
-ADD dicom.ini /opt/conquest/dicom.ini
+ADD dicom.ini /opt/conquest/dicom.ini.template
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
