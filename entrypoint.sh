@@ -70,8 +70,8 @@ cp $CONQUEST_HOME/linux/conf/dicom.sql.$DB_TYPE $CONQUEST_HOME/dicom.sql
 sed -i "s@/var/www@$CONQUEST_HOME/webserver@" /etc/apache2/apache2.conf
 
 # Copy dgate binary to cgi-bin
-cp $CONQUEST_HOME/linux/dgate $CGI_DIR/dgate
-cp $CONQUEST_HOME/linux/dgate $CONQUEST_HOME/dgate
+#cp $CONQUEST_HOME/linux/dgate $CGI_DIR/dgate
+#cp $CONQUEST_HOME/linux/dgate $CONQUEST_HOME/dgate
 
 # Fix permissions
 chmod 0700 $CGI_DIR/dgate
@@ -81,7 +81,11 @@ chown -R www-data:www-data $CONQUEST_HOME/webserver
 
 cp $DICOM_INI_TEMPLATE $DICOM_INI
 
+echo ""
 cat $DICOM_INI
+echo ""
+
+rm -r $CONQUEST_HOME/linux
 
 # Regenerate the database
 cd $CONQUEST_HOME
