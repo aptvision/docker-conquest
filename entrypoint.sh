@@ -89,7 +89,9 @@ rm -r $CONQUEST_HOME/linux
 
 # Regenerate the database
 cd $CONQUEST_HOME
+if [ "$REGENERATE_DB_ON_STARTUP" == "true" ]; then
 ./dgate -v -r
+fi
 
 service apache2 restart
 
