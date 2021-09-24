@@ -3,6 +3,7 @@
 set -e
 
 CONQUEST_HOME=/opt/conquest
+DICOM_INI=$CONQUEST_HOME/dicom.ini.template
 DICOM_INI=$CONQUEST_HOME/dicom.ini
 CGI_DIR=/usr/lib/cgi-bin
 
@@ -14,10 +15,10 @@ PORT="${PORT:-5678}"
 DEBUG_LEVEL="${DEBUG_LEVEL:-0}"
 
 # Replace vars that are independant of db choice
-sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI
-sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI
-sed -i "s@TCPPort.*@TCPPort = $PORT@" $DICOM_INI
-sed -i "s@DebugLevel.*@DebugLevel = $DEBUG_LEVEL@" $DICOM_INI
+sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI_TEMPLATE
+sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI_TEMPLATE
+sed -i "s@TCPPort.*@TCPPort = $PORT@" $DICOM_INI_TEMPLATE
+sed -i "s@DebugLevel.*@DebugLevel = $DEBUG_LEVEL@" $DICOM_INI_TEMPLATE
 
 case $DB_TYPE in
 "postgres")
@@ -41,19 +42,19 @@ case $DB_TYPE in
 
     echo "2" | ./maklinux
 
-    sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" $DICOM_INI
-    sed -i "s@SQLServer.*@SQLServer = $POSTGRES_SERVER@" $DICOM_INI
-    sed -i "s@Username.*@Username = $POSTGRES_USERNAME@" $DICOM_INI
-    sed -i "s@Password.*@Password = $POSTGRES_PASSWORD@" $DICOM_INI
-    sed -i "s@PostGres.*@PostGres = 1@" $DICOM_INI
-    sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" $DICOM_INI
-    sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" $DICOM_INI
-    sed -i "s@BrowseThroughDBF.*@BrowseThroughDBF = 1@" $DICOM_INI
+    sed -i "s@SQLHost.*@SQLHost = $POSTGRES_HOST@" $DICOM_INI_TEMPLATE
+    sed -i "s@SQLServer.*@SQLServer = $POSTGRES_SERVER@" $DICOM_INI_TEMPLATE
+    sed -i "s@Username.*@Username = $POSTGRES_USERNAME@" $DICOM_INI_TEMPLATE
+    sed -i "s@Password.*@Password = $POSTGRES_PASSWORD@" $DICOM_INI_TEMPLATE
+    sed -i "s@PostGres.*@PostGres = 1@" $DICOM_INI_TEMPLATE
+    sed -i "s@UseEscapeStringConstants.*@UseEscapeStringConstants = 1@" $DICOM_INI_TEMPLATE
+    sed -i "s@DoubleBackSlashToDB.*@DoubleBackSlashToDB = 1@" $DICOM_INI_TEMPLATE
+    sed -i "s@BrowseThroughDBF.*@BrowseThroughDBF = 1@" $DICOM_INI_TEMPLATE
 
   ;;
 "sqlite")
-    sed -i "s@sql_server_placeholder@$CONQUEST_HOME/data/dbase/conquest.db3@" $DICOM_INI
-    sed -i "s@SQLite.*\$@SQLite = 1@" $DICOM_INI
+    sed -i "s@sql_server_placeholder@$CONQUEST_HOME/data/dbase/conquest.db3@" $DICOM_INI_TEMPLATE
+    sed -i "s@SQLite.*\$@SQLite = 1@" $DICOM_INI_TEMPLATE
   ;;
 "dbase" | *)
   echo "5" | ./maklinux
@@ -77,6 +78,8 @@ chmod 0700 $CGI_DIR/dgate
 chmod 0700 $CONQUEST_HOME/dgate
 chown -R www-data:www-data $CGI_DIR/dgate
 chown -R www-data:www-data $CONQUEST_HOME/webserver
+
+cp $DICOM_INI_TEMPLATE $DICOM_INI
 
 cat $DICOM_INI
 
