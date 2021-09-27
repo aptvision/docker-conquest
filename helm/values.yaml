@@ -55,3 +55,5 @@ env:
     value: "5678"
   - name: "DEBUG_LEVEL"
     value: "0"   # Can be 0, 1, 2, 3, 4.  Be careful with higher values as a LOT will be logged
+  - name: "REGENERATE_DB_ON_STARTUP"
+    value: "false"   # Can be "true" or "false"
