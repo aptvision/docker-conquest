@@ -69,10 +69,6 @@ cp $CONQUEST_HOME/linux/conf/dicom.sql.$DB_TYPE $CONQUEST_HOME/dicom.sql
 # Change the allowed webroot in the main apache config
 sed -i "s@/var/www@$CONQUEST_HOME/webserver@" /etc/apache2/apache2.conf
 
-# Copy dgate binary to cgi-bin
-#cp $CONQUEST_HOME/linux/dgate $CGI_DIR/dgate
-#cp $CONQUEST_HOME/linux/dgate $CONQUEST_HOME/dgate
-
 # Fix permissions
 chmod 0700 $CGI_DIR/dgate
 chmod 0700 $CONQUEST_HOME/dgate
