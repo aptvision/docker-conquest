@@ -13,12 +13,17 @@ cd $CONQUEST_HOME
 AE_TITLE="${AE_TITLE:-CONQUESTSRV1}"
 PORT="${PORT:-5678}"
 DEBUG_LEVEL="${DEBUG_LEVEL:-0}"
+CUSTOM_DICOM_INI_SETTINGS="${CUSTOM_DICOM_INI_SETTINGS:-}"
 
 # Replace vars that are independant of db choice
 sed -i "s@MyACRNema.*@MyACRNema = $AE_TITLE@" $DICOM_INI_TEMPLATE
 sed -i "s@PACSName.*@PACSName = $AE_TITLE@" $DICOM_INI_TEMPLATE
 sed -i "s@TCPPort.*@TCPPort = $PORT@" $DICOM_INI_TEMPLATE
 sed -i "s@DebugLevel.*@DebugLevel = $DEBUG_LEVEL@" $DICOM_INI_TEMPLATE
+
+# Add any extra entries to dicom.ini
+echo "# Additional settings" >> $DICOM_INI_TEMPLATE
+echo -e "$CUSTOM_DICOM_INI_SETTINGS" >> $DICOM_INI_TEMPLATE
 
 case $DB_TYPE in
 "postgres")

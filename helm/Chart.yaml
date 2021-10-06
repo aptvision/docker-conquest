@@ -3,7 +3,7 @@
 name: conquest
 # We don't need to track chart versions since we already publish versions
 # of this GIT repository, so we can go back to any chart version this way.
-version: 0.0.16
+version: 0.0.17
 apiVersion: v1
 description: The ConQuest DICOM Server
 keywords:

@@ -16,6 +16,14 @@ Note that this will bind ports 5678 and 80 in the Docker container to the same p
 
 The ConQuest web interface is then accessible by opening a web browser and navigating to `http://localhost`.
 
+While developing it's sometimes useful to have a DICOM CLI toolkit to test with, another dicom
+toolkit is recommended for this, for example:
+
+```
+docker-compose up -d
+docker run -it --net host vanessa/dicom findscu 127.0.0.1 5678 -k "(0010,0010)=HEWETT*"
+```
+
 ### Docker compose
 
 Alternatively, use docker-compose. See the [compose-examples](compose-examples) directory for examples. To run

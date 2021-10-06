@@ -51,7 +51,7 @@ RUN mkdir /usr/local/man/man1
 RUN	chmod 0700 /opt/conquest/maklinux
 #RUN	chmod 0700 /opt/conquest/maklinux; echo "5" | /opt/conquest/maklinux # precompiled
 
-WORKDIR /opt/conquest/linux
+WORKDIR /opt/conquest
 
 # Enable CGI scripts on the Apache Server
 RUN a2enmod cgi
