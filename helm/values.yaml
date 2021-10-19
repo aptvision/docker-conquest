@@ -61,3 +61,26 @@ env:
     value: |-
       # You can put as many lines of additional
       # settings as needed here
+
+
+extraVolumes:
+  []
+  # - name: extras
+  #   emptyDir: {}
+
+extraVolumeMounts:
+  []
+  # - name: extras
+  #   mountPath: /usr/share/extras
+  #   readOnly: true
+
+# Add some additional lua scripts here, the key is the event and the value should contain
+# the full lua script that should run.
+luaScripts:
+  QueryConverter0: |
+    # Add your lua script here, this comment is the default and will not modify the query in any way
+  RetrieveConverter0: |
+    # Add your lua script here, this comment is the default and will not modify the query in any way
+  WorkListQueryConverter0: |
+    # Add your lua script here, this comment is the default and will not modify the query in any way
+  # Add more events here as needed, if adding make sure they are also present in dicom.ini otherwise it won't be loaded

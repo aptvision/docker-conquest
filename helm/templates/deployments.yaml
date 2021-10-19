@@ -46,3 +46,11 @@ spec:
           env:
 {{ toYaml .Values.env | indent 12 }}
 
+          volumeMounts:
+            - name: scripts-volume
+              mountPath: /opt/conquest/custom-lua-scripts
+
+      volumes:
+        - name: scripts-volume
+          configMap:
+            name: "{{ .Values.name }}-scripts"
