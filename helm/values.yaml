@@ -74,13 +74,31 @@ extraVolumeMounts:
   #   mountPath: /usr/share/extras
   #   readOnly: true
 
-# Add some additional lua scripts here, the key is the event and the value should contain
-# the full lua script that should run.
+# Any of the following lua events can be overwritten if needed
 luaScripts:
   QueryConverter0: |
-    # Add your lua script here, this comment is the default and will not modify the query in any way
-  RetrieveConverter0: |
-    # Add your lua script here, this comment is the default and will not modify the query in any way
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
   WorkListQueryConverter0: |
-    # Add your lua script here, this comment is the default and will not modify the query in any way
-  # Add more events here as needed, if adding make sure they are also present in dicom.ini otherwise it won't be loaded
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  RetrieveConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  RetrieveResultConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  QueryResultConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  ModalityWorklistQueryResultConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  MergeStudiesConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  MergeSeriesConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  ArchiveConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  VirtualServerQueryConverter: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  VirtualServerQueryResultConverter: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  MoveDeviceConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way
+  RejectedImageConverter0: |
+    -- Add your lua script here, this comment is the default and will not modify the query/result in any way

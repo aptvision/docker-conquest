@@ -60,6 +60,8 @@ case $DB_TYPE in
 "sqlite")
     sed -i "s@sql_server_placeholder@$CONQUEST_HOME/data/dbase/conquest.db3@" $DICOM_INI_TEMPLATE
     sed -i "s@SQLite.*\$@SQLite = 1@" $DICOM_INI_TEMPLATE
+
+    echo "3" | ./maklinux
   ;;
 "dbase" | *)
   echo "5" | ./maklinux

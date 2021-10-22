@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  conquest:
+    build: .
+    ports:
+#    - 80:80
+    - 5679:5678
+    environment:
+      DB_TYPE: "sqlite"
+      AE_TITLE: CONQUESTSRV1
+      DEBUG_LEVEL: 4
+      REGENERATE_DB_ON_STARTUP: "true"
+
+
+    volumes:
+    - /tmp/conquest-data/:/opt/conquest/data/dbase/
+#    - ./lua-scripts:/opt/conquest/custom-lua-scripts/
