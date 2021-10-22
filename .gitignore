@@ -1,2 +1,2 @@
-./lua-scripts
+./lua-scripts/*
 ./docker-compose.yml
