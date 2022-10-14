@@ -1,0 +1,27 @@
+-- For this modality only, copy tag 0040,0009 to 0040,1001
+-- https://aptvision.atlassian.net/browse/SYS-658
+if (Association.Calling == "KGHUSGYNSIM01") then
+    Data["0040,1001"] = Data["0040,0009"]
+end
+
+startTimestamp = os.time(os.date('*t')) - (60 * 60 * 12)
+endTimestamp = os.time(os.date('*t')) + (60 * 60 * 12)
+
+startDate = os.date("%Y%m%d", startTimestamp)
+endDate = os.date("%Y%m%d", endTimestamp)
+
+startTime = os.date("%H%M%S", startTimestamp)
+endTime = os.date("%H%M%S", endTimestamp)
+
+-- Remove any result that is outside our window  of +-12 hours from now
+if (Data.ScheduledProcedureStepStartDate and Data.ScheduledProcedureStepStartTime and Data.ScheduledProcedureStepStartDate <= startDate and Data.ScheduledProcedureStepStartTime < startTime) then
+    print("Skipping worklist result " .. Data.ScheduledProcedureStepStartDate .. " at " .. Data.ScheduledProcedureStepStartTime .. " because it's outside window of ".. startDate .. " " .. startTime .. " to " .. endDate .. " " .. endTime)
+    destroy()
+end
+
+if (Data.ScheduledProcedureStepStartDate and Data.ScheduledProcedureStepStartTime and Data.ScheduledProcedureStepStartDate >= endDate and Data.ScheduledProcedureStepStartTime > endTime) then
+    print("Skipping worklist result " .. Data.ScheduledProcedureStepStartDate .. " at " .. Data.ScheduledProcedureStepStartTime .. " because it's outside window of ".. startDate .. " " .. startTime .. " to " .. endDate .. " " .. endTime)
+    destroy()
+end
+
+print("Keeping worklist result " .. Data.ScheduledProcedureStepStartDate .. " at " .. Data.ScheduledProcedureStepStartTime .. " because it's within window of ".. startDate .. " " .. startTime .. " to " .. endDate .. " " .. endTime)

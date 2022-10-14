@@ -1,0 +1,27 @@
+-- Always filter by the calling AETitle
+Data["0040,0001"] = Association.Calling;
+
+-- Remove some filters that some modalities ask for, which cause problems
+Data.RequestedProcedureID = nil;
+if Data.ScheduledProcedureStepSequence then
+  Data.ScheduledProcedureStepSequence[0].ScheduledProcedureStepLocation = nil;
+  Data.ScheduledProcedureStepSequence[0].ScheduledStationName = nil
+end
+
+-- Next we overwrite the date/time of the results, we filter further in WorkListQueryResultConverter0
+-- Note that we can't filter by time here, only date, since we can't use OR in the query we
+-- can only filter out by dates outside the desired window in WorkListQueryResultConverter0
+-- https://forum.image-systems.biz/forum/index.php?thread/50405-is-an-or-query-condition-possible/
+
+startTimestamp = os.time(os.date('*t')) - (60 * 60 * 12)
+endTimestamp = os.time(os.date('*t')) + (60 * 60 * 12)
+
+startDate = os.date("%Y%m%d", startTimestamp)
+endDate = os.date("%Y%m%d", endTimestamp)
+
+startTime = os.date("%H%M%S", startTimestamp)
+
+Data.ScheduledProcedureStepStartDate = startDate .. "-" .. endDate
+
+-- This is here just to ensure the time is returned in the response, it doesnt exclude anything
+Data.ScheduledProcedureStepStartTime = '000000-235959'

@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+  conquest:
+
+    # Use the prebuilt image or build from the source
+    image: ghcr.io/aptvision/conquest
+    #build: .
+
+    ports:
+#    - 80:80
+    - 5679:5678
+    environment:
+      DB_TYPE: "sqlite"
+      AE_TITLE: CONQUESTSRV1
+      DEBUG_LEVEL: 4
+      REGENERATE_DB_ON_STARTUP: "true"
+
+    volumes:
+    - /tmp/conquest-data/:/opt/conquest/data/dbase/
+
+      # This is an example of how to mount custom lua scripts into the container, just
+      # mounting is enough for them to be run.
+    - ./lua-scripts:/opt/conquest/custom-lua-scripts/

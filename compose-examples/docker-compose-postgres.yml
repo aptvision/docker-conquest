@@ -2,7 +2,11 @@ version: "2"
 
 services:
   conquest:
-    build: .
+
+    # Use the prebuilt image or build from the source
+    image: ghcr.io/aptvision/conquest
+    #build: .
+
     ports:
     - 80:80
     environment:
@@ -16,6 +20,10 @@ services:
       - postgres
     volumes:
     - /opt/conquest/data/
+
+    # This is an example of how to mount custom lua scripts into the container, just
+    # mounting is enough for them to be run.
+    - ./lua-scripts:/opt/conquest/custom-lua-scripts/
 
   postgres:
     image: postgres:12
