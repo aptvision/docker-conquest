@@ -24,10 +24,10 @@ RUN apt-get -y update \
     && apt-get autoremove \
     && apt-get clean
 
-
-RUN mkdir /tmp/conquest; cd /tmp/conquest; \
-	wget -q http://ingenium.home.xs4all.nl/dicomserver/dicomserver150a.zip; \
-	unzip dicomserver150a.zip; \
+RUN mkdir /tmp/conquest/ ; \
+    cd /tmp/conquest ; \
+	wget -q --output-document=/tmp/conquest/dicomserver.zip https://ingenium.home.xs4all.nl/dicomserver/dicomserver150a.zip ; \
+	unzip dicomserver.zip ; \
 	mv /tmp/conquest /opt/conquest
 
 # Create missing directory prior to make (otherwise we'll get errors)
@@ -48,6 +48,7 @@ RUN mkdir /usr/local/man/man1
 #	sudo make install;
 
 # Compile and install the web access
+RUN ls -la /opt/conquest/
 RUN	chmod 0700 /opt/conquest/maklinux
 #RUN	chmod 0700 /opt/conquest/maklinux; echo "5" | /opt/conquest/maklinux # precompiled
 

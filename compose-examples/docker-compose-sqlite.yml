@@ -22,3 +22,6 @@ services:
       # This is an example of how to mount custom lua scripts into the container, just
       # mounting is enough for them to be run.
     - ./lua-scripts:/opt/conquest/custom-lua-scripts/
+
+      # In this example we mount a custom config file into the container
+    - ./dicom.sql:/opt/conquest/dicom.sql
