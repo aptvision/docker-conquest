@@ -70,12 +70,19 @@ esac
 
 find $CONQUEST_HOME -type f -name "*dicom.sql*"
 
+echo ""
+
 if [ -f $CONQUEST_HOME/dicom.sql ]; then
   echo "Existing dicom.sql file detected, using that instead of defaults"
 else
   echo "No dicom.sql file specified in config, using defaults"
   cp $CONQUEST_HOME/linux/conf/dicom.sql.$DB_TYPE $CONQUEST_HOME/dicom.sql
 fi
+
+echo "DEBUG: dicom.sql file contents:"
+echo "========================="
+cat $CONQUEST_HOME/dicom.sql
+echo "========================="
 
 # Change the allowed webroot in the main apache config
 sed -i "s@/var/www@$CONQUEST_HOME/webserver@" /etc/apache2/apache2.conf
@@ -89,8 +96,10 @@ chown -R www-data:www-data $CONQUEST_HOME/webserver
 cp $DICOM_INI_TEMPLATE $DICOM_INI
 
 echo ""
+echo "DEBUG: dicom.ini file contents:"
+echo "========================="
 cat $DICOM_INI
-echo ""
+echo "========================="
 
 rm -r $CONQUEST_HOME/linux
 
