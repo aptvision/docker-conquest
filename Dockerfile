@@ -28,6 +28,7 @@ RUN mkdir /tmp/conquest/ ; \
     cd /tmp/conquest ; \
 	wget -q --output-document=/tmp/conquest/dicomserver.zip https://ingenium.home.xs4all.nl/dicomserver/dicomserver150a.zip ; \
 	unzip dicomserver.zip ; \
+    rm dicomserver.zip ; \
 	mv /tmp/conquest /opt/conquest
 
 # Create missing directory prior to make (otherwise we'll get errors)
