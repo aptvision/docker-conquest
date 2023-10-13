@@ -2,6 +2,8 @@
 
 set -e
 
+echo "entrypoint script started, booting up now..."
+
 CONQUEST_HOME=/opt/conquest
 DICOM_INI_TEMPLATE=$CONQUEST_HOME/dicom.ini.template
 DICOM_INI=$CONQUEST_HOME/dicom.ini
