@@ -64,7 +64,7 @@ RUN a2enmod cgi
 # Expose port 80 (http) and 5678 (for DICOM query/retrieve/send)
 EXPOSE 5678 80
 
-ENV DB_TYPE "dbase"
+ENV DB_TYPE="postgres"
 
 ADD dicom.ini /opt/conquest/dicom.ini.template
 ADD entrypoint.sh /entrypoint.sh

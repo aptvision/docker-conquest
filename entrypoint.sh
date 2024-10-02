@@ -103,7 +103,7 @@ echo "========================="
 cat $DICOM_INI
 echo "========================="
 
-rm -r $CONQUEST_HOME/linux
+rm -rf $CONQUEST_HOME/linux
 
 # Regenerate the database
 cd $CONQUEST_HOME
